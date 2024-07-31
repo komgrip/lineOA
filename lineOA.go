@@ -5,11 +5,11 @@ import (
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
-type serviceLine struct {
+type ServiceLine struct {
 	bot *linebot.Client
 }
 
-func NewServicesLine(token, secret string) (*serviceLine, error) {
+func NewServicesLine(token, secret string) (*ServiceLine, error) {
 	bot, err := linebot.New(
 		secret,
 		token,
@@ -17,10 +17,10 @@ func NewServicesLine(token, secret string) (*serviceLine, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &serviceLine{bot: bot}, nil
+	return &ServiceLine{bot: bot}, nil
 }
 
-func (s *serviceLine) LineService(c *gin.Context) ([]*linebot.Event, error) {
+func (s *ServiceLine) LineService(c *gin.Context) ([]*linebot.Event, error) {
 	events, err := s.bot.ParseRequest(c.Request)
 	if err != nil {
 		return nil, err
@@ -28,7 +28,7 @@ func (s *serviceLine) LineService(c *gin.Context) ([]*linebot.Event, error) {
 	return events, nil
 }
 
-func (s *serviceLine) ReplyText(replyToken string, message string) error {
+func (s *ServiceLine) ReplyText(replyToken string, message string) error {
 	messageReply := linebot.NewTextMessage(message)
 	_, err := s.bot.ReplyMessage(replyToken, messageReply).Do()
 	if err != nil {
@@ -37,7 +37,7 @@ func (s *serviceLine) ReplyText(replyToken string, message string) error {
 	return nil
 }
 
-func (s *serviceLine) ReplyFlex(replyToken string, textReply string, message string) error {
+func (s *ServiceLine) ReplyFlex(replyToken string, textReply string, message string) error {
 	flexContainer, err := linebot.UnmarshalFlexMessageJSON([]byte(message))
 	if err != nil {
 		return err
@@ -52,7 +52,7 @@ func (s *serviceLine) ReplyFlex(replyToken string, textReply string, message str
 	return nil
 }
 
-func (s *serviceLine) PushText(userLineID string, message string) error {
+func (s *ServiceLine) PushText(userLineID string, message string) error {
 	messageReply := linebot.NewTextMessage(message)
 	_, err := s.bot.PushMessage(userLineID, messageReply).Do()
 	if err != nil {
@@ -61,7 +61,7 @@ func (s *serviceLine) PushText(userLineID string, message string) error {
 	return nil
 }
 
-func (s *serviceLine) PushFlex(userLineID string, textReply string, message string) error {
+func (s *ServiceLine) PushFlex(userLineID string, textReply string, message string) error {
 	flexContainer, err := linebot.UnmarshalFlexMessageJSON([]byte(message))
 	if err != nil {
 		return err
@@ -77,7 +77,7 @@ func (s *serviceLine) PushFlex(userLineID string, textReply string, message stri
 	return nil
 }
 
-func (s *serviceLine) GetProfile(userLineID string) (*linebot.UserProfileResponse, error) {
+func (s *ServiceLine) GetProfile(userLineID string) (*linebot.UserProfileResponse, error) {
 	user, err := s.bot.GetProfile(userLineID).Do()
 	if err != nil {
 		return nil, err
