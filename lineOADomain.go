@@ -2,7 +2,7 @@ package lineOA
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
 
 type LineServiceDomain interface {
