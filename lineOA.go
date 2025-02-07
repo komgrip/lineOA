@@ -85,3 +85,12 @@ func (s *ServiceLine) GetProfile(userLineID string) (*linebot.UserProfileRespons
 
 	return user, nil
 }
+
+func (s *ServiceLine) HealthCheck() (*linebot.TestWebhookResponse, error) {
+	response, err := s.bot.TestWebhook().Do()
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
