@@ -12,5 +12,6 @@ type LineServiceDomain interface {
 	PushText(userLineID string, message string) error
 	PushFlex(userLineID string, textReply string, message string) error
 	GetProfile(userLineID string) (*linebot.UserProfileResponse, error)
+	GetProfileLineGroup(groupID string) (*linebot.GroupSummaryResponse, error)
 	HealthCheck() (*linebot.TestWebhookResponse, error)
 }

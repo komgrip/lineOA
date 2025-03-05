@@ -86,6 +86,14 @@ func (s *ServiceLine) GetProfile(userLineID string) (*linebot.UserProfileRespons
 	return user, nil
 }
 
+func (s *ServiceLine) GetProfileLineGroup(groupID string) (*linebot.GroupSummaryResponse, error) {
+	profile, err := s.bot.GetGroupSummary(groupID).Do()
+	if err != nil {
+		return nil, err
+	}
+	return profile, nil
+}
+
 func (s *ServiceLine) HealthCheck() (*linebot.TestWebhookResponse, error) {
 	response, err := s.bot.TestWebhook().Do()
 	if err != nil {
