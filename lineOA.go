@@ -86,8 +86,8 @@ func (s *ServiceLine) GetProfile(userLineID string) (*linebot.UserProfileRespons
 	return user, nil
 }
 
-func (s *ServiceLine) ReplyImage(replyToken string, imageURL string) error {
-	messageReply := linebot.NewImageMessage(imageURL, "")
+func (s *ServiceLine) ReplyImage(replyToken string, originalContentURL string, previewImageURL string) error {
+	messageReply := linebot.NewImageMessage(originalContentURL, previewImageURL)
 	_, err := s.bot.ReplyMessage(replyToken, messageReply).Do()
 	if err != nil {
 		return err
@@ -95,8 +95,8 @@ func (s *ServiceLine) ReplyImage(replyToken string, imageURL string) error {
 	return nil
 }
 
-func (s *ServiceLine) PushImage(userLineID string, imageURL string) error {
-	messageReply := linebot.NewImageMessage(imageURL, "")
+func (s *ServiceLine) PushImage(userLineID string, originalContentURL string, previewImageURL string) error {
+	messageReply := linebot.NewImageMessage(originalContentURL, previewImageURL)
 	_, err := s.bot.PushMessage(userLineID, messageReply).Do()
 	if err != nil {
 		return err
