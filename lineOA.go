@@ -86,6 +86,24 @@ func (s *ServiceLine) GetProfile(userLineID string) (*linebot.UserProfileRespons
 	return user, nil
 }
 
+func (s *ServiceLine) ReplyImage(replyToken string, imageURL string) error {
+	messageReply := linebot.NewImageMessage(imageURL, "")
+	_, err := s.bot.ReplyMessage(replyToken, messageReply).Do()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *ServiceLine) PushImage(userLineID string, imageURL string) error {
+	messageReply := linebot.NewImageMessage(imageURL, "")
+	_, err := s.bot.PushMessage(userLineID, messageReply).Do()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (s *ServiceLine) GetProfileLineGroup(groupID string) (*linebot.GroupSummaryResponse, error) {
 	profile, err := s.bot.GetGroupSummary(groupID).Do()
 	if err != nil {
