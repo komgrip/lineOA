@@ -52,8 +52,28 @@ func (s *ServiceLine) ReplyFlex(replyToken string, textReply string, message str
 	return nil
 }
 
+func (s *ServiceLine) ReplyTextEmoji(replyToken string, message string, emojis []*linebot.Emoji) error {
+	messageReply := linebot.NewTextMessage(message)
+	messageReply.Emojis = emojis
+	_, err := s.bot.ReplyMessage(replyToken, messageReply).Do()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (s *ServiceLine) PushText(userLineID string, message string) error {
 	messageReply := linebot.NewTextMessage(message)
+	_, err := s.bot.PushMessage(userLineID, messageReply).Do()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *ServiceLine) PushTextEmoji(userLineID string, message string, emojis []*linebot.Emoji) error {
+	messageReply := linebot.NewTextMessage(message)
+	messageReply.Emojis = emojis
 	_, err := s.bot.PushMessage(userLineID, messageReply).Do()
 	if err != nil {
 		return err
